@@ -1,21 +1,42 @@
 package com.krayin.krayin.controllers;
 
-import com.krayin.krayin.entity.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.krayin.krayin.entities.Student;
+import com.krayin.krayin.services.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    @GetMapping("")
-    public Student index() {
-        Student student = new Student();
-        student.setId(1);
-        student.setEmail("surajkashayp370@webkul.in");
-        student.setName("Suraj Kashyap");
-        student.setFatherName("Ram Kumar");
+    @Autowired
+    private StudentService studentService;
 
-        return student;
+    @GetMapping
+    public List<Student> index() {
+        return this.studentService.index();
+    }
+
+    @GetMapping("/{id}")
+    public Student show(@PathVariable Integer id) {
+        return this.studentService.show(id);
+    }
+
+    @PostMapping
+    public Student store(@RequestBody Student student) {
+        return this.studentService.store(student);
+    }
+
+    @PutMapping("/{id}")
+    public Student update(@PathVariable Integer id, @RequestBody Student student) {
+        student.setId(id);
+
+        return this.studentService.store(student);
+    }
+
+    @DeleteMapping("/{id}")
+    public void destroy(@PathVariable Integer id) {
+        this.studentService.destroy(id);
     }
 }

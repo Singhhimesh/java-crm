@@ -1,4 +1,4 @@
-package com.krayin.krayin.entity;
+package com.krayin.krayin.entities;
 
 import jakarta.persistence.*;
 
@@ -8,8 +8,14 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column(name = "name", length = 255)
     private String name;
+
+    @Column(name = "email", length = 255)
     private String email;
+
+    @Column(name = "father_name", length = 255)
     private String fatherName;
 
     public Student() {}
@@ -19,14 +25,6 @@ public class Student {
         this.name = name;
         this.email = email;
         this.fatherName = fatherName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Integer getId() {
@@ -45,11 +43,29 @@ public class Student {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFatherName() {
         return fatherName;
     }
 
     public void setFatherName(String fatherName) {
         this.fatherName = fatherName;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", fatherName='" + fatherName + '\'' +
+                '}';
     }
 }

@@ -1,14 +1,8 @@
 package com.krayin.krayin;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-
-import com.krayin.krayin.entity.User;
-import com.krayin.krayin.repositories.UserRepository;
 
 @SpringBootApplication
 public class KrayinCrmApplication {
