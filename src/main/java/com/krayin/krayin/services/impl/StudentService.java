@@ -12,4 +12,6 @@ public interface StudentService {
     public Student store(Student student);
 
     public void destroy(Integer id);
+
+    public boolean existsById(Integer id);
 }
