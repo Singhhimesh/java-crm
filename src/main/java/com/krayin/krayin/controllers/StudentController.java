@@ -1,38 +1,48 @@
 package com.krayin.krayin.controllers;
 
 import com.krayin.krayin.entities.Student;
-import com.krayin.krayin.services.StudentService;
+import com.krayin.krayin.services.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.type.IntersectionType;
 import java.util.List;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
-    private StudentService studentService;
+    private StudentServiceImpl studentService;
 
     @GetMapping
-    public List<Student> index() {
-        return this.studentService.index();
+    public ResponseEntity<List<Student>> index() {
+        return ResponseEntity.ok(this.studentService.index());
     }
 
     @GetMapping("/{id}")
-    public Student show(@PathVariable Integer id) {
-        return this.studentService.show(id);
+    public ResponseEntity<Student> show(@PathVariable Integer id) {
+        return ResponseEntity
+                .ok(this.studentService.show(id));
     }
 
     @PostMapping
-    public Student store(@RequestBody Student student) {
-        return this.studentService.store(student);
+    public ResponseEntity<Student> store(@RequestBody Student student) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(this.studentService.store(student));
     }
 
     @PutMapping("/{id}")
-    public Student update(@PathVariable Integer id, @RequestBody Student student) {
+    public ResponseEntity<Student> update(@PathVariable Integer id, @RequestBody Student student) {
+        if (!this.studentService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         student.setId(id);
 
-        return this.studentService.store(student);
+        return ResponseEntity.status(HttpStatus.OK).body(this.studentService.store(student));
     }
 
     @DeleteMapping("/{id}")
